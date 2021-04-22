@@ -4,7 +4,7 @@ cat original.tex | python main.py > translated.tex
 
 `original.tex`
 
-```
+```latex
 \documentclass{article}
 
 \usepackage{amsmath}
@@ -21,7 +21,7 @@ hello $\Q$ world
 
 `translated.tex`
 
-```
+```latex
 \documentclass{article}
 
 \usepackage{amsmath}
