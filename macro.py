@@ -56,6 +56,7 @@ def build_macro_body(body_tokens):
 def get_token_list(tokens):
     token = tokens.popleft()
     if token is None:
+        # FIXME
         print('error: no more tokens')
         return [token]
 

@@ -1,8 +1,8 @@
+#!/usr/bin/python
 from token_types import *
 from tokenize import tokenize
 from macro import Macro
 from leftgrowinglist import LeftGrowingList
-
 
 macro = Macro(tokenize('user: #1'), tokenize('hello #1'))
 

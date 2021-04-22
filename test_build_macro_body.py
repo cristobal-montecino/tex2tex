@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from token_types import *
 from tokenize import tokenize
 from macro import build_macro_body

@@ -3,17 +3,17 @@ from macro import Macro
 from leftgrowinglist import LeftGrowingList
 from tokenize import tokenize
 
-MACRO_NATIVE = 0
-MACRO_USER = 1
+MACRO_TYPE_NATIVE = 0
+MACRO_TYPE_USER = 1
 
 def parse(input_string):
     tokens = LeftGrowingList(tokenize(input_string))
     
     output_builder = []
-    macro_types = {'def': MACRO_NATIVE}
+    macro_type_of = {'def': MACRO_TYPE_NATIVE}
     macros = {}
     
-    prev_macro = -1
+    next_to_a_macro_index = 0
     
     i = 0
     while True:
@@ -26,14 +26,14 @@ def parse(input_string):
         ttype, value = token
 
         if ttype == TOKEN_TYPE_MACRO:
-            if value in macro_types:
-                macro_type = macro_types[value]
-                if macro_type == MACRO_USER:
+            if value in macro_type_of:
+                macro_type = macro_type_of[value]
+                if macro_type == MACRO_TYPE_USER:
                     macro = macros[value]
                     args = macro.parse_args(tokens)
                     macro.exec(args, tokens)
 
-                elif macro_type == MACRO_NATIVE:
+                elif macro_type == MACRO_TYPE_NATIVE:
                     if value == 'def':
                         body_tokens = []
                         pattern = []
@@ -85,21 +85,21 @@ def parse(input_string):
                     
                         _, name = name_token
 
-                        macro_types[name] = MACRO_USER
+                        macro_type_of[name] = MACRO_TYPE_USER
                         macros[name] = Macro(pattern, body_tokens)
 
             else:
                 output_builder.append(f'\\{value}')
-                prev_macro = i
+                next_to_a_macro_index = i + 1
 
         elif ttype == TOKEN_TYPE_TEXT:
-            if prev_macro == i - 1:
+            if next_to_a_macro_index == i:
                 output_builder.append(' ')
           
             output_builder.append(value)
             
         elif ttype == TOKEN_TYPE_DIGIT:
-            if prev_macro == i - 1:
+            if next_to_a_macro_index == i:
                 output_builder.append(' ')
                 
             output_builder.append(value)
@@ -118,12 +118,12 @@ def parse(input_string):
         elif ttype == TOKEN_TYPE_CLOSE_GROUP:
             output_builder.append('}')
         elif ttype == TOKEN_TYPE_OTHER:
-            if prev_macro == i - 1:
+            if next_to_a_macro_index == i:
                 output_builder.append(' ')
                 
             output_builder.append(value)
         else:
-            if prev_macro == i - 1:
+            if next_to_a_macro_index == i:
                 output_builder.append(' ')
                 
             output_builder.append(value)

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from parse import parse
 
 assert parse('\\def\\newcommand#1#2{\\def#1{#2}}\\newcommand{\\hello}{hello world}\\hello world') == 'hello worldworld'

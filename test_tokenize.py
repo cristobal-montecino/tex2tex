@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from token_types import *
 from tokenize import tokenize
 

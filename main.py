@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from parse import parse
 import sys
 
