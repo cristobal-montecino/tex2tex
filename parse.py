@@ -25,7 +25,7 @@ def parse_def(macros, macro_type_of, tokens):
     PARSING_START = 0
     PARSING_HASH = 1
     
-    status = PARSING_START
+    state = PARSING_START
     pattern_loop = True
     while pattern_loop:
         token = tokens.popleft()
@@ -37,19 +37,19 @@ def parse_def(macros, macro_type_of, tokens):
         ttype, value = token
         
         while True:
-            if status == PARSING_START:
+            if state == PARSING_START:
                 if ttype == TOKEN_TYPE_OPEN_GROUP:
                     pattern_loop = False
                     break
                     
                 elif ttype == TOKEN_TYPE_HASH:
-                    status = PARSING_HASH
+                    state = PARSING_HASH
                     
                 else:
                     pattern.append(token)
                 
-            elif status == PARSING_HASH:
-                status = PARSING_START
+            elif state == PARSING_HASH:
+                state = PARSING_START
                 
                 if ttype == TOKEN_TYPE_HASH:
                     pattern.append(token)
@@ -64,8 +64,8 @@ def parse_def(macros, macro_type_of, tokens):
                     continue
                
             break
-
-    status = PARSING_START
+            
+    state = PARSING_START
     group_count = 1
     body_loop = True    
     while body_loop:
@@ -77,7 +77,7 @@ def parse_def(macros, macro_type_of, tokens):
         
         ttype, value = token
         while True:
-            if status == PARSING_START:
+            if state == PARSING_START:
                 if ttype == TOKEN_TYPE_OPEN_GROUP:
                     group_count += 1
                     
@@ -89,13 +89,13 @@ def parse_def(macros, macro_type_of, tokens):
                         break
                         
                 elif ttype == TOKEN_TYPE_HASH:
-                    status = PARSING_HASH
+                    state = PARSING_HASH
                     break
                 
                 body_tokens.append(token)
                     
-            elif status == PARSING_HASH:
-                status = PARSING_START
+            elif state == PARSING_HASH:
+                state = PARSING_START
                 
                 if ttype == TOKEN_TYPE_HASH:
                     body_tokens.append(token)

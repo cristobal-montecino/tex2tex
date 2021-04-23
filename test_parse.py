@@ -13,6 +13,19 @@ assert parse('\\def\\defineDefineEat{\\def\\defineEat{\\def\\eat####1{}}\\define
 code ='\\def\\a#1{\\def\\b##1##2##3##4{###1}\\b{a}{b}{c}{d}}\\a'
 assert parse(code + '3') == 'c' and parse(code + '4') == 'd' and parse(code + '2') == 'b' and parse(code + '1') == 'a'
 
+assert parse('\\def\\removedotcom#1.com{#1}\\removedotcom hello.com') == 'hello'
+
+assert parse('\\def\\a#1at#2{(#1)(#2)}\\a helloatworld') == '(hello)(w)orld'
+
+assert parse('\\def\\a hello{}\\a helloworld') == 'world'
+
+assert parse('\\def\\a he#1at#2{(#1)(#2)}\\a helloatworld') == '(llo)(w)orld'
+
+assert parse('\\def\\a#1at#2.{(#1)(#2)}\\a helloatworld.') == '(hello)(world)'
+
+assert parse('\\def\\a#1at#2.{(#1)(#2)}\\a {hello}atworld.') == '(hello)(world)'
+
+assert parse('\\def\\a#1at#2.{(#1)(#2)}\\a helloatw{o}{rl}d.') == '(hello)(w{o}{rl}d)'
 
 # let
 assert parse('\\def\\a{hello world}\\let\\b\\a\\b') == 'hello world'
