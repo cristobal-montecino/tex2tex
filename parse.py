@@ -233,7 +233,13 @@ def parse(input_string):
                         
                     elif value == 'futurelet':
                         parse_futurelet(macros, macro_type_of, tokens)
-
+                    else:
+                        # FIXME
+                        print('error: undefined native macro')
+                else:
+                    # FIXME
+                    print('error: defined macro with undefined type')
+                    
             else:
                 output_builder.append(f'\\{value}')
                 next_to_a_macro_index = i + 1
