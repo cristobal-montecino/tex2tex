@@ -6,7 +6,10 @@ assert parse('\\def\\newcommand#1#2{\\def#1{#2}}\\newcommand{\\hello}{hello worl
 
 assert parse('\\def\\eat#1{}\eat hello') == 'ello'
 
-assert parse('\\def\\parse user: #1, number: #2{Hello #1 (###2)}\\parse user: {John}, number: {1}') == 'Hello John (#1)'
+assert parse('\\def\\eat#1{}\eat{hello}') == ''
+
+assert parse('\\def\\parse user: #1, number: #2{Hello #1 (###2)}\\parse user: {John}, number: {123}') == 'Hello John (#123)'
+assert parse('\\def\\parse user: #1, number: #2{Hello #1 (###2)}\\parse user: John, number: 123') == 'Hello John (#1)23'
 
 assert parse('\\def\\defineDefineEat{\\def\\defineEat{\\def\\eat####1{}}\\defineEat}\\defineDefineEat\\eat hello') == 'ello'
 
