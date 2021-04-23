@@ -2,7 +2,6 @@
 from parse import parse
 
 # def
-
 assert parse('\\def\\newcommand#1#2{\\def#1{#2}}\\newcommand{\\hello}{hello world}\\hello world') == 'hello worldworld'
 
 assert parse('\\def\\eat#1{}\eat hello') == 'ello'
@@ -22,3 +21,7 @@ assert parse('\\def\\a{hello world}\\let\\b\\a\\b') == 'hello world'
 # expandafter
 code = '\\def\\a#1{#1}\\def\\b#1{{hello #1}}'
 assert parse(code + '\\expandafter\\a\\b{world}') == 'hello world' and parse(code + '\\a\\b{world}') == '{hello world}'
+
+
+# futurelet
+assert parse('\\def\\a{(\\token)}\\def\\b{hello world}\\futurelet\\token\\a\\b') == '(hello world)'

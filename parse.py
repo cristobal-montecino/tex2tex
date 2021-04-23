@@ -125,8 +125,7 @@ def parse_let(macros, macro_type_of, tokens):
         # FIXME
         print('error: let: need two macros (first is not a macro token)')
         return
-        
-   
+    
     from_token = tokens.popleft()
     if from_token is None:
         # FIXME
@@ -146,17 +145,16 @@ def parse_user_macro(macro, tokens):
     args = macro.parse_args(tokens)
     macro.exec(args, tokens)
 
-
 def parse_expandafter(macros, macro_type_of, tokens):
     holded_token = tokens.popleft()
     if holded_token is None:
         # FIXME
-        print('error: expandafter: need two macros (first is not found)')
+        print('error: expandafter: need two tokens (first is not found)')
         
     token = tokens.popleft()
     if token is None:
         # FIXME
-        print('error: expandafter: need two macros (second is not found)')
+        print('error: expandafter: need two tokens (second is not found)')
     
     while True:    
         ttype, value = token
@@ -173,6 +171,25 @@ def parse_expandafter(macros, macro_type_of, tokens):
         
     tokens.appendleft(holded_token)
 
+def parse_futurelet(macros, macro_type_of, tokens):
+    to_token = tokens.popleft()
+    if to_token is None:
+        # FIXME
+        print('error: futurelet: need three tokens (missing first)')
+        return
+     
+    holded_token = tokens.popleft()
+    if holded_token is None:
+        # FIXME
+        print('error: futurelet: need three tokens (missing second)')
+        return
+        
+    tokens.appendleft(to_token)
+
+    parse_let(macros, macro_type_of, tokens)
+    
+    tokens.appendleft(holded_token)   
+
 def parse(input_string):
     tokens = LeftGrowingList(tokenize(input_string))
     
@@ -181,6 +198,7 @@ def parse(input_string):
         'def': MACRO_TYPE_NATIVE,
         'let': MACRO_TYPE_NATIVE,
         'expandafter': MACRO_TYPE_NATIVE,
+        'futurelet': MACRO_TYPE_NATIVE,
     }
     macros = {}
     
@@ -212,6 +230,9 @@ def parse(input_string):
 
                     elif value == 'expandafter':
                         parse_expandafter(macros, macro_type_of, tokens)
+                        
+                    elif value == 'futurelet':
+                        parse_futurelet(macros, macro_type_of, tokens)
 
             else:
                 output_builder.append(f'\\{value}')
