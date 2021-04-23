@@ -349,7 +349,7 @@ Before: `[\expandafter, Token1, Token2]`
 
 After: `[Token1, ExpandedTokens2...]`
 
-where ExpandedTokens2... is the result tokens of the expansion of Token2.
+where `ExpandedTokens2...` is the result tokens of the expansion of `Token2`.
 
 ### Example:
 
