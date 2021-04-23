@@ -260,7 +260,7 @@ Another example, `\def\metameta{\def\meta{\def\macro####1{####1}}}`. Defines `\m
 
 * `Name: metameta`
 * `Pattern: []`
-* `Body: [\def, \meta, {, \def, \macro, #, #, 1, {, #, #, 1, }, }]``
+* `Body: [\def, \meta, {, \def, \macro, #, #, 1, {, #, #, 1, }, }]`
 
 When `\metameta` is evaluated, defines `\meta` as
 
