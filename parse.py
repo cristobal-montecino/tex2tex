@@ -151,12 +151,12 @@ def parse_expandafter(macros, macro_type_of, tokens):
     holded_token = tokens.popleft()
     if holded_token is None:
         # FIXME
-        print('error: expandafter: need token two tokens (first is not found)')
+        print('error: expandafter: need two macros (first is not found)')
         
     token = tokens.popleft()
     if token is None:
         # FIXME
-        print('error: expandafter: need token two tokens (second is not found)')
+        print('error: expandafter: need two macros (second is not found)')
     
     while True:    
         ttype, value = token
