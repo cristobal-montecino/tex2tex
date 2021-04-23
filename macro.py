@@ -1,9 +1,6 @@
 from token_types import *
 from leftgrowinglist import LeftGrowingList
 
-# BUG LIST
-# BUG: ## -> # 
-
 def build_macro_body(body_tokens):
     start = 0
     end = 0
@@ -99,7 +96,12 @@ class Macro:
     
     def exec(self, args, tokens):
         for where, by in self.replace_index:
-            self.body[where] = args[by]
+            if by in args:
+                self.body[where] = args[by]
+            else:
+                # FIXME
+                print(f'Argument #{by} not defined')
+                self.body[where] = []
 
         for token_list in self.body:
             tokens.extendleft(token_list)
@@ -108,7 +110,7 @@ class Macro:
         args = {}
         for token in self.pattern:
             ttype, value = token
-    
+
             if ttype == TOKEN_TYPE_ARG:
                 if value in args:
                     # FIXME
