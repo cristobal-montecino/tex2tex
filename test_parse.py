@@ -30,6 +30,9 @@ assert parse('\\def\\a#1at#2.{(#1)(#2)}\\a {hello}atworld.') == '(hello)(world)'
 
 assert parse('\\def\\a#1at#2.{(#1)(#2)}\\a helloatw{o}{rl}d.') == '(hello)(w{o}{rl}d)'
 
+assert parse('\\def\\a#1#2{(#1)(#2)}\\a hello') == '(h)(e)llo'
+assert parse('\\def\\a#1#2{(#1)(#2)}\\a he') == '(h)(e)'
+
 # let
 assert parse('\\def\\a{hello world}\\let\\b\\a\\b') == 'hello world'
 
@@ -40,4 +43,4 @@ assert parse(code + '\\expandafter\\a\\b{world}') == 'hello world' and parse(cod
 
 
 # futurelet
-assert parse('\\def\\a{(\\token)}\\def\\b{hello world}\\futurelet\\token\\a\\b') == '(hello world)'
+assert parse('\\def\\a{(\\token)}\\def\\b{hello world}\\futurelet\\token\\a\\b') == '(hello world)hello world'

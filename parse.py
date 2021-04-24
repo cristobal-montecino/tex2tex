@@ -183,12 +183,20 @@ def parse_futurelet(macros, macro_type_of, tokens):
         # FIXME
         print('error: futurelet: need three tokens (missing second)')
         return
-        
+    
+    from_token = tokens.popleft()
+    if holded_token is None:
+        # FIXME
+        print('error: futurelet: need three tokens (missing third)')
+        return
+    
+    tokens.appendleft(from_token)    
     tokens.appendleft(to_token)
 
     parse_let(macros, macro_type_of, tokens)
     
-    tokens.appendleft(holded_token)   
+    tokens.appendleft(from_token)
+    tokens.appendleft(holded_token)
 
 def parse(input_string):
     tokens = LeftGrowingList(tokenize(input_string))

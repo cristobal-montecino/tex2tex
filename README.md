@@ -304,7 +304,7 @@ After: `[]`
 
 `\futurelet ToToken LastToken FromToken`
 
-Define the macro `ToToken` same as `FromToken` and then expands LastToken
+Define the macro `ToToken` same as `FromToken` and remove ToToken. 
 
 
 ### Requirements
@@ -317,9 +317,9 @@ Define the macro `ToToken` same as `FromToken` and then expands LastToken
 
 ### Internal
 
-Before: `[\futurelet, ToMacro, LastToken, FromMacro ]`
+Before: `[\futurelet, ToMacro, LastToken, FromMacro]`
 
-After: `[LastToken]`
+After: `[LastToken, FromMacro]`
 
 
 ---

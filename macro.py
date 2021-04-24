@@ -155,7 +155,6 @@ def get_token_list_with_boundaries(tokens):
                 break
 
             ttype, value = token
-            
             token_list.append(token)
             
             if ttype == TOKEN_TYPE_OPEN_GROUP:
@@ -257,6 +256,7 @@ class Macro:
                             # FIXME
                             print('error: input ends before pattern is completed')
                             break
+
                         tokens.appendleft(first_token)
                         
                         ttype, value = first_token
@@ -264,7 +264,6 @@ class Macro:
                             args[arg_name] = get_token_list(tokens)
                             state = PARSING_START
                             continue
-                            
                         else:   
                             arg_value = []
                             while not check_pattern(pattern_value, tokens, arg_value):
