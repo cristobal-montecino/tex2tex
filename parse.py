@@ -138,6 +138,7 @@ def parse_let(macros, macro_type_of, tokens):
         print('error: let: need two macros (second is not a macro token)')
         return
     
+    # FIXME
     macro_type_of[to_name] = macro_type_of[from_name]
     macros[to_name] = macros[from_name]
 
